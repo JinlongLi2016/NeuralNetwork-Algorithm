@@ -34,8 +34,7 @@ J = sum( (y' .* log(a3) + (1-y') .* log(1-a3))(:) )/(-m) + ...
 
 
 delta3 = h_theta - y';  % 10*m Output layer:
-disp(size(Theta2));
-disp(size(delta3));
+
 delta2 = (Theta2' * delta3) .* (a2 .* (1-a2));
 delta1 = (Theta1' * delta2(2:end, :)) .* (a1 .* (1-a1));
 

@@ -3,7 +3,7 @@ clear ; close all; clc
 load('ex4data1.mat') ; % X y  loaded
 
 
-options = optimset('Maxiter', 500);
+options = optimset('Maxiter', 50);
 lambda = 1;
 
 input_layer_size = 400;
@@ -29,7 +29,7 @@ costFunction = @(p) nnCostFunction(p, ...
 Theta1 = reshape(nn_params(1:hidden_layer_size * (input_layer_size+1)), ...
 hidden_layer_size,input_layer_size+1);
 Theta2 = reshape(nn_params(hidden_layer_size * (input_layer_size+1) + 1:end),...
-num_labels_layer_size, hidden_layer_size+1);
+num_labels, hidden_layer_size+1);
 
 fprintf("parameters optimized");
 
@@ -39,7 +39,13 @@ a2 = [ ones(1,m) ; Theta1 * sigmoid( a1 ) ];
 a3 = sigmoid( a2 );
 [ans, p] = max(a3);
 
-fprintf('\nTraining Set Accuracy: %f\n', mean(double(pred ==y)) *100);
+ix = y;
+y = zeros(m, num_labels);
+for cac = 1:m
+  y(cac, ix(cac)) = 1;
+end
+
+fprintf('\nTraining Set Accuracy: %f\n', mean(double(pred ==y)(1)) *100);
 
 
 
